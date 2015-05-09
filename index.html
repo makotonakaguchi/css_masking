@@ -1,0 +1,224 @@
+<!doctype html>
+<html>
+<head vocab="http://schema.org/" typeof="WebPage">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta property="name" content="CSS Masking Module Level 1 Exmple" />
+<title>CSS Masking Module Level 1 Exmple</title>
+<meta property="datepublished" content="2015-05-06" />
+<meta property="creator" content="中口誠, Makoto Nakaguchi" />
+<meta property="keywords" content="CSS, Masking,　SVG, Example" />
+<meta property="description" content="CSS Masking Module Level 1の実装例です。webkit、chrome canary, Firefox Nightlyなどの開発版ブラウザで確認することができます。" />
+<style>
+html { font-size: 85% }
+body {	margin: 1em }
+article { margin: 5rem 0 }
+section { margin: 4rem 0 }
+h1 { font-size: 3.0rem }
+h2 { font-size: 2.0rem }
+h3 { font-size: 1.5rem }
+i { font-style: normal; font-weight: bold }
+a { text-underline-position: under; text-decoration-style: wavy }
+h1,h2,h3 { margin: 0.5rem 0; font-weight: normal; color: #5f5f5f }
+h1 a { color: #5f5f5f }
+ul, dl { margin: 1rem 0 }
+dd { width: auto; background: gray; margin-bottom: 2em; }
+#clip_svg {
+  position: absolute; 
+  top: 0px;
+  width: 600px;
+  height: 600px;
+  -webkit-clip-path: url("#clip1");
+  clip-path: url("#clip1");
+  background: #c10a0a;
+}
+#clip_geobox {
+
+  top: 0px;
+  left: 0px;
+  width: 300px;
+  height: 300px;
+  -webkit-clip-path: polygon(15px 99px, 30px 87px, 65px 99px, 85px 55px,
+122px 57px, 184px 73px, 198px 105px, 199px 150px,
+145px 159px, 155px 139px, 126px 120px, 112px 138px,
+80px 128px, 39px 126px, 24px 104px);
+  clip-path: polygon(15px 99px, 30px 87px, 65px 99px, 85px 55px,
+122px 57px, 184px 73px, 198px 105px, 199px 150px,
+145px 159px, 155px 139px, 126px 120px, 112px 138px,
+80px 128px, 39px 126px, 24px 104px);
+  background: #eb9851;
+}
+#clip_basic-shape {
+  width: 300px;
+  height: 300px;
+  -webkit-clip-path: circle(at 25% 25%);
+  clip-path: circle(at 25% 25%);
+  background: #0f6edd;
+}
+#clip-nonzero {
+}
+#clip-evenodd {
+}
+#mask_defs {
+  width: 300px;
+  height: 300px;
+  -webkit-mask-image: linear-gradient(#000 0%, transparent 100%);
+  mask-image: linear-gradient(#000 0%, transparent 100%);
+  -webkit-mask-position: 50% 50%;
+  mask-position: 50% 50%;
+  -webkit-mask-repeat: no-repeat;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: 150px;
+  background: #8be3d2;
+}
+#mask_img-svg {
+
+  width: 300px;
+  height: 300px;
+  -webkit-mask: url(luminance-mask.svg) 50% 50% no-repeat;
+  mask: url(luminance-mask.svg) 50% 50% no-repeat;
+  background: linear-gradient(#f0a593 0%, #f093c5 100%);
+}
+#mask_img-bitmap {
+
+  width: 300px;
+  height: 300px;
+  -webkit-mask: url(luminance-mask.png) 50% 50% no-repeat;
+  mask: url(luminance-mask.png) 50% 50% no-repeat;
+  background: url(bg.png) 50% 50% no-repeat;
+}
+#m-mode_alpha {
+  -webkit-mask-image: url(dot-mask.png);
+  mask-image: url(dot-mask.png);
+  -webkit-mask-mode: alpha;
+  mask-mode: alpha;
+  width: 300px;
+  height: 300px;
+  background: #2b92ea;
+}
+#m-mode_lumina {
+  -webkit-mask-image: url(dot-mask.png);
+  mask-image: url(dot-mask.png);
+  -webkit-mask-mode: luminance;
+  mask-mode: luminance;
+  width: 300px;
+  height: 300px;
+  background: #2b92ea;
+}
+#m-repeat_space {
+  -webkit-mask-image: url(dot-mask.png) luminance;
+  mask-image: url(dot-mask.png) luminance;
+  -webkit-mask-repeat: space;
+  mask-repeat: space;
+  width: 300px;
+  height: 300px;
+  background: #2b92ea;
+}
+</style>
+<script type="text/javascript" src="scripts/shCore.js"></script>
+<script type="text/javascript" src="scripts/shBrushCss.js"></script>
+<script type="text/javascript" src="scripts/shBrushJScript.js"></script>
+<script type="text/javascript" src="scripts/shBrushXml.js"></script>
+<script type="text/javascript">SyntaxHighlighter.all();</script>
+
+</head>
+<body>
+<h1>CSS Masking Module Level 1 Exmple</h1>
+<article>
+<h2>Clipping Paths</h2>
+<section>
+<h3>Clipping Shape: the <i>clip-path</i> property</h3>
+
+<dl>
+<dt>clip-source</dt>
+<dd>
+<div id="clip_svg"></div>
+<svg>
+  <clipPath id="clip1">
+      <polygon points="60,367 75,355 110,367 130,323 167,325 229,341 243,373 244,418 190,427 200,407 171,388 157,406 125,396 84,394 69,372 "/>
+  </clipPath>
+</svg>
+</dd>
+
+<dt>geometry-box</dt>
+<dd>
+<div id="clip_geobox"></div>
+</dd>
+<dt>basic-shape</dt>
+<dd>
+<div id="clip_basic-shape"></div>
+</dd>
+</dl>
+</section>
+
+<section>
+<h3>Winding Rules: the <i>clip-rule</i> property</h3>
+
+<dl>
+<dt>nonzero</dt>
+<dd>
+<div id="clip-nonzero"></div>
+<svg>
+  <clipPath id="clip2">
+      <rect x="0" y="0" width="200" height="100" />
+  </clipPath>
+  <circle cx="100" cy="100" r="100" fill="#23ccb2" clip-path="url(#clip2)"/>
+</svg>
+</dd>
+<dt>evenodd</dt>
+<dd>
+<div id="clip-evenodd"></div>
+<svg>
+  <clipPath id="clip3">
+      <rect x="50" y="50" width="70" height="70" />
+  </clipPath>
+  <rect x="0" y="0" width="200" height="200" fill="#23ccb2" clip-path="url(#clip3)" clip-rule="evenodd" />
+</svg>
+</dd>
+</dl>
+</section>
+</article>
+<article>
+<h2>Positioned Masks</h2>
+<section>
+<h3>Mask Image Source: the <i>mask-image</i> property</h3>
+<dl>
+  <dt>CSS image</dt>
+  <dd>
+  <div id="mask_defs"></div>
+  </dd>
+  <dt>url</dt>
+  <dd>
+  <div id="mask_img-svg"></div>
+  </dd>
+  <dt>url bitmap</dt>
+  <dd>
+  <div id="mask_img-bitmap"></div>
+  </dd>
+</dl>
+</section>
+<section>
+<h3>Mask Image Interpretation: the <i>mask-mode</i> property</h3>
+<dl>
+  <dt>alpha</dt>
+  <dd>
+  <div id="m-mode_alpha"></div>
+  </dd>
+  <dt>luminance</dt>
+  <dd>
+  <div id="m-mode_lumina"></div>
+  </dd>
+</dl>
+</section>
+<section>
+<h3>Tiling Mask Images: the <i>mask-repeat</i> property</h3>
+<dl>
+  <dt>space</dt>
+  <dd>
+  <div id="m-repeat_space"></div>
+  </dd>
+</dl>
+</section>
+</article>
+</body>
+</html>
